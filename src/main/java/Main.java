@@ -1,13 +1,35 @@
-import java.io.File;
-import java.util.Arrays;
+import com.google.gson.*;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        BooleanSearchEngine engine = new BooleanSearchEngine(new File("pdfs"));
-        System.out.println(engine.search("бизнес"));
+        try (ServerSocket serverSocket = new ServerSocket(8989);) { // стартуем сервер один(!) раз
+            BooleanSearchEngine engine = new BooleanSearchEngine(new File("pdfs"));
+            String request;
+            while (true) { // в цикле(!) принимаем подключения
+                try (
+                        Socket socket = serverSocket.accept();
+                        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                ) {
+                    // обработка одного подключения
+                    System.out.println("New connection accepted  " + socket.getPort());
+                    request = in.readLine();
 
-        // здесь создайте сервер, который отвечал бы на нужные запросы
-        // слушать он должен порт 8989
-        // отвечать на запросы /{word} -> возвращённое значение метода search(word) в JSON-формате
+                    List<PageEntry> jsonResponce = engine.search(request);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(jsonResponce);
+                    out.println(json);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Не могу стартовать сервер");
+            e.printStackTrace();
+        }
+
     }
 }
