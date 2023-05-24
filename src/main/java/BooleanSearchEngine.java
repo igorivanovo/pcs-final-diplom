@@ -107,7 +107,7 @@ public class BooleanSearchEngine implements SearchEngine {
             resultResponse.add(new PageEntry(non, 0, 0));
         }
         Collections.sort(resultResponse);
-
+        System.out.println(resultResponse);
         return resultResponse;
     }
 }

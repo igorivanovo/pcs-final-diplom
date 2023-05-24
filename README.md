@@ -54,19 +54,19 @@ for (var word : words) { // перебираем слова
 Также, списки ответов для каждого слова  отсортированы в порядке уменьшения поля `count`. Для этого класс `PageEntry`  реализует интерфейс `Comparable`.
  Вот пример работы на слове "старт":
 ```
-[{"pdfName":"SoftSkills.pdf","page":3,"count":1}, {"pdfName":"Технология распознования лиц.pdf","page":6,"count":1}]
+[PageEntry{pdf=SoftSkills.pdf, page=3, count1}, PageEntry{pdf=Технология распознования лиц.pdf, page=6, count1}]
 ```
 на слове "арт":
 ```
-[PageEntry{pdfName=Продвижение игр.pdf, page=1, count1}]
+[PageEntry{pdf=Продвижение игр.pdf, page=1, count1}]
 ```
 на слове "нолан":
 ```
-[PageEntry{pdfName=Продвижение игр.pdf, page=1, count1}]
+[PageEntry{pdf=Продвижение игр.pdf, page=1, count1}]
 ```
 на слове "игра":
 ```
-[{"pdfName":"Продвижение игр.pdf","page":1,"count":1}, {"pdfName":"Продвижение игр.pdf","page":2,"count":1}, {"pdfName":"Продвижение игр.pdf","page":7,"count":1}]
+[PageEntry{pdf=Продвижение игр.pdf, page=1, count1}, PageEntry{pdf=Продвижение игр.pdf, page=2, count1}, PageEntry{pdf=Продвижение игр.pdf, page=7, count1}]
 ```
 ## Сервер
  В `main`  запускается сервер, слушающий порт `8989`, к которому приходят подключения и на входной поток подавать одно слово (обозначим как `word`) или группа слов, отвечает результатом вызова метода `search(word)`, но в виде JSON-текста (библиотека для работы с JSON подключена к `pom.xml`).
