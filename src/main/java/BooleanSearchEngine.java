@@ -60,14 +60,10 @@ public class BooleanSearchEngine implements SearchEngine {
     @Override
     public List<PageEntry> search(String reguest) {
         List<PageEntry> resultResponse = new ArrayList<>();
-        List<String> requestStop = new ArrayList<>(Arrays.asList(reguest.split(" ")));
-        List<String> myList = correctString(reguest);
-        requestStop.removeAll(myList);
-        String noWord = "";
+        List<String> myList = correctString(reguest.toLowerCase());
         for (String word : myList) {
             List<PageEntry> result = wordBase.get(word);
             if (result == null) {
-                noWord = noWord + " " + word;
                 continue;
             }
             for (PageEntry pageEntry : result) {
@@ -96,18 +92,7 @@ public class BooleanSearchEngine implements SearchEngine {
                 }
             }
         }
-        String non = "";
-        if (!requestStop.isEmpty()) {
-            non = non + " в списке исключения: " + requestStop;
-        }
-        if (noWord.length() > 0) {
-            non = non + " слова не найденные в файлах: " + noWord;
-        }
-        if (non.length() > 0) {
-            resultResponse.add(new PageEntry(non, 0, 0));
-        }
         Collections.sort(resultResponse);
-        System.out.println(resultResponse);
         return resultResponse;
     }
 }

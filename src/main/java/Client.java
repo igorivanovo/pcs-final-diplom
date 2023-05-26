@@ -25,7 +25,7 @@ public class Client {
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("введите word или несколько через пробел:");
                 String word = scanner.nextLine();
-                out.println(word.toLowerCase());
+                out.println(word);
 
                 json = in.readLine();
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
